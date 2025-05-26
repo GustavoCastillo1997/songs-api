@@ -16,3 +16,14 @@ class Song(db.Model):
     music_styles = db.relationship('MusicStyle', secondary=song_music_style, backref='songs')
     composers = db.relationship('Composer', secondary=song_composer, backref='songs')
     services = db.relationship('Service', secondary=song_service, backref='songs')
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "duration": self.duration,
+            "release_date": self.release_date,
+            "instrumental": self.instrumental,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }

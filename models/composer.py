@@ -14,3 +14,13 @@ class Composer(db.Model):
 
     country = db.relationship('Country', backref='composers')
     music_styles = db.relationship('MusicStyle', secondary=composer_music_style, backref='composers')
+
+    def to_dict(self) -> dict:
+        return{
+            "id": self.id,
+            "name": self.name,
+            "birth_date": self.birth_date,
+            "country_id": self.country_id,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
