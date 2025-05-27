@@ -10,14 +10,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-for bp in all_blueprints:
-    app.register_blueprint(bp)
-
-db = SQLAlchemy(app)
-
 # Registra os blueprints
 for bp in all_blueprints:
     app.register_blueprint(bp)
+
+@app.route('/')
+def index():
+    return "API funcionando! 🚀"
 
 # Rodar app
 if __name__ == '__main__':

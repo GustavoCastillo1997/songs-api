@@ -8,9 +8,9 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     duration = db.Column(db.Time, nullable=False, default='00:00:00')
-    release_date = db.Column(db.Datetime, nullable=False)
-    instrumental = db.Column(db.Bool, nullable=True)
-    created_at = db.column(db.Datetime, nullable=False, default=func.now())
+    release_date = db.Column(db.DateTime, nullable=False)
+    instrumental = db.Column(db.Boolean, nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now(), onupdate=func.now())
 
     music_styles = db.relationship('MusicStyle', secondary=song_music_style, backref='songs')

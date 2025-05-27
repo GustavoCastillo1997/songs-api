@@ -7,7 +7,7 @@ class MusicStyle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255), nullable=True)
-    created_at = db.column(db.Datetime, nullable=False, default=func.now())
+    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now(), onupdate=func.now())
 
     def to_dict(self) -> dict:
