@@ -1,23 +1,32 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from db import db
 from routes import all_blueprints
+from config import Config
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://usuario:Katoreborn1611*mysql@localhost:3306/streaming'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
 
 db.init_app(app)
 
-# Registra os blueprints
 for bp in all_blueprints:
-    app.register_blueprint(bp)
+    app.register_blueprint(bp, url_prefix='/api')
 
 @app.route('/')
 def index():
-    return "API funcionando! 🚀"
+    output = ["📚 Available API Endpoints:\n"]
 
-# Rodar app
+    for rule in app.url_map.iter_rules():
+        if rule.endpoint == 'static':
+            continue
+
+        methods = ', '.join(sorted(rule.methods - {'HEAD', 'OPTIONS'}))
+        line = f"{methods:15} {rule.rule}"
+        output.append(line)
+
+    return "<pre>" + "\n".join(output) + "</pre>"
+
 if __name__ == '__main__':
+    debug_mode = app.config.get("DEBUG", False)
+    app.run(debug=debug_mode)
     app.run(debug=True)
